@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Vue Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <center>
+            <h1>KeyRecorder</h1>
+            <input v-on:keydown="getKey"> <span>Key: {{keyVal}}</span>
+        </center>
+
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    keyVal: ''
+                };
+            },
+            methods: {
+                getKey(e) {
+                    this.keyVal = e.key
+                }
+            }
+        });
+        app.mount("#app");
+    </script>
+</body>
+
+</html>

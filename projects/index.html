@@ -13,8 +13,7 @@
             width: 100%;
             height: 100vh;
             background-color: black;
-            /* border: 12px solid white; */
-            color: white
+            color: white;
         }
 
         .myJumpscare {
@@ -24,7 +23,6 @@
             transform: translate(-50%, -50%);
             max-width: 80%;
             max-height: 80%;
-            /* Initially hidden */
         }
 
         span {
@@ -37,40 +35,44 @@
         }
     </style>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
 </head>
 
 <body>
-
     <div id="appContainer">
-        <div class="app" v-on:mousemove=" triggerJumpscare">
-            <img v-show="jumpscare==true" class="myJumpscare" src="assets/jumpscare.webp" alt="Jumpscare Image">
+        <audio id="audio" preload="auto" src="../assets/ohhSkibidiReee.mp3"></audio>
+        <div class="app" v-on:mousemove="triggerJumpscare">
+            <img v-show="jumpscare" class="myJumpscare" src="../assets/jumpscare.webp" alt="Jumpscare Image">
             <span v-show="jumpscare">WHY DID YOU MOVE IT</span>
         </div>
     </div>
-
-
-
 
     <script>
         const appContainer = Vue.createApp({
             data() {
                 return {
                     jumpscare: false,
-                }
+                };
             },
-
             methods: {
                 triggerJumpscare() {
+                    const audio = document.getElementById('audio');
+                    // Check if the audio can be played
+                    if (audio.paused) {
+                        audio.currentTime = 0; // Reset to start
+                        audio.play().catch((err) => {
+                            console.error("Audio playback failed:", err);
+                        });
+                    }
+
                     this.jumpscare = true;
                     setTimeout(() => {
                         this.jumpscare = false;
                     }, 2000);
-                }
-            }
+                },
+            },
         });
 
-        appContainer.mount('#appContainer');
+        appContainer.mount("#appContainer");
     </script>
 </body>
 
